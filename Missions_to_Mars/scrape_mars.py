@@ -61,4 +61,52 @@ def scrape():
     
     listings["facts_table"] = facts_final
 
+    # Hemis scrape portion
+    hemis_url = 'https://marshemispheres.com/'
+    browser.visit(hemis_url)
+
+    # standard copy/pasta for my html / soup
+    html = browser.html
+    hemis_bs = BeautifulSoup(html, 'html.parser')
+
+    hemi_keys = []
+    hemi_values = []
+    dupes = []
+    img_source_list = []
+    hemi_dict_final = {}
+
+    #use the find all for the title and teaser
+    hemi1 = hemis_bs.find_all('h3')
+    for i in range(len(hemi1)-1):
+        hemi_keys.append(hemi1[i].text)
+        
+    hemi2 = hemis_bs.find_all("a", class_="itemLink product-item")
+    for i in range(len(hemi2)-1):
+        hemi_img = hemi2[i].get("href")
+        final_url = f'{hemis_url}{hemi_img}'
+        if final_url in hemi_values:
+            dupes.append(final_url)
+        else:
+            hemi_values.append(final_url)
+
+    for i in range(len(hemi_values)):
+        url = f'{hemi_values[i]}'
+        browser.visit(url)
+
+        # standard copy/pasta for my html / soup
+        html = browser.html
+        soup = BeautifulSoup(html, 'html.parser')
+
+        #use the find all for the title and teaser
+        full_img = soup.find('img', class_="wide-image").get('src')
+        full_img_url = f'https://astrogeology.usgs.gov/cache/{full_img}'
+        img_source_list.append(full_img_url)
+        
+    #create a dictionary of the final values
+    for i in range(len(hemi_keys)):
+        hemi_dict_final[hemi_keys[i]] = img_source_list[i]
+        
+    listings["hemispheres_name"] = hemi_keys
+    listings["hemispheres_img"] = img_source_list
+    
     return listings

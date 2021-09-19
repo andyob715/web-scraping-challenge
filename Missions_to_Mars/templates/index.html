@@ -46,6 +46,29 @@
           </table>
       </div>
     </div>
+    <div class="row" id="craiglist-listings">
+      <div class="col-md-12">
+        <hr class="my-2">
+        <h4 class="heading">Mars Hemisphere Data</h4>
+        <hr class="my-2">
+          <table class="table table-striped">
+            {% for item in listings.hemispheres_name %}
+            <thead>
+              <tr>
+                <th>{{ item }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              {% for imag in listings.hemispheres_img %}
+                <td> {{ imag }} </td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+      </div>
+    </div>  
   </div>
 </body>
 
