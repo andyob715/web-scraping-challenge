@@ -19,13 +19,33 @@
 
     <!-- Craigslist Listings -->
     <div class="row" id="craiglist-listings">
-      <div class="col-md-12">
+      <div class="col-md-8">
         <h4 class="heading">{{listings.news}}</h4>
         <p>{{listings.teasers}}</p>
+        <hr class="my-2">
+        <h4 class="heading">Featured Image</h4>
         <img src="{{ listings.final_img_url }}" alt="Featured Image">
       </div>
+      <div class="col-md-4">
+        <h4 calss ="heading">Mars Facts!</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for key, value in listings.facts_table.items() %}
+             <tr>
+                  <th> {{ key }} </th>
+                  <td> {{ value }} </td>
+             </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      </div>
     </div>
-
   </div>
 </body>
 
